@@ -9,6 +9,7 @@ import {
   RotateCcw,
   Network,
   MoreHorizontal,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,63 +65,69 @@ export function TopBar({ onOpenAddNode, onOpenAddEdge, onOpenSearch }: TopBarPro
   };
 
   return (
-    <header className="h-14 flex items-center justify-between px-4 glass-strong border-b border-white/5 z-50 shrink-0">
+    <header className="h-14 flex items-center justify-between px-5 glass-strong hud-border-bottom z-50 shrink-0">
       {/* Left: Logo + Stats */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
-            <Network className="h-4 w-4 text-white" />
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-[#00d4ff] to-[#bf5af2] flex items-center justify-center animate-glow-pulse">
+            <Network className="h-4.5 w-4.5 text-white" />
           </div>
           <div>
-            <h1 className="text-sm font-semibold gradient-text leading-tight">
+            <h1 className="text-sm font-bold gradient-text leading-tight tracking-wide">
               Knowledge Graph
             </h1>
-            <p className="text-[10px] text-muted-foreground leading-tight">
-              {nodes.length} nodes &middot; {edges.length} edges
-            </p>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#30d158] animate-pulse-glow" />
+              <p className="text-[10px] text-[#4a7a9f] leading-tight font-mono tracking-wider">
+                {nodes.length} nodes &middot; {edges.length} edges
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Center: Search */}
-      <div className="flex-1 flex justify-center max-w-md mx-4">
+      {/* Center: Layout selector + Search */}
+      <div className="flex-1 flex items-center justify-center gap-3 max-w-lg mx-4">
+        {/* Layout selector */}
+        <div className="flex items-center gap-1 h-8 px-1 bg-white/[0.03] border border-white/[0.06] rounded-lg shrink-0">
+          {LAYOUT_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setLayout(opt.value)}
+              className={`h-6 px-2.5 text-[10px] font-medium rounded-md transition-all duration-200 cursor-pointer tracking-wide whitespace-nowrap shrink-0 ${
+                layoutName === opt.value
+                  ? "bg-[#00d4ff]/15 text-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,0.15)]"
+                  : "text-[#4a7a9f] hover:text-[#8ac4de] hover:bg-white/[0.03]"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Search */}
         <button
-          className="w-full max-w-sm h-8 px-3 text-muted-foreground hover:text-foreground glass rounded-lg flex items-center gap-2 text-xs transition-colors cursor-pointer"
+          className="h-8 px-3 text-[#4a7a9f] hover:text-[#8ac4de] bg-white/[0.03] border border-white/[0.06] hover:border-[#00d4ff]/20 rounded-lg flex items-center gap-2 text-xs transition-all duration-200 cursor-pointer min-w-[180px]"
           onClick={onOpenSearch}
         >
           <Search className="h-3.5 w-3.5" />
-          <span>Search nodes...</span>
+          <span className="font-mono text-[10px] tracking-wider">Search nodes...</span>
           <Badge
             variant="outline"
-            className="ml-auto text-[10px] px-1.5 py-0 h-5 border-white/10"
+            className="ml-auto text-[9px] px-1.5 py-0 h-4 border-white/[0.08] text-[#4a7a9f] font-mono"
           >
-            Ctrl+K
+            /
           </Badge>
         </button>
       </div>
 
       {/* Right: Actions */}
       <div className="flex items-center gap-1.5">
-        {/* Layout selector */}
-        <select
-          value={layoutName}
-          onChange={(e) => setLayout(e.target.value)}
-          className="h-8 px-2 text-xs bg-white/5 border border-white/10 rounded-lg text-foreground outline-none cursor-pointer hover:bg-white/10 transition-colors"
-        >
-          {LAYOUT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-[#1a1a2e]">
-              {opt.label}
-            </option>
-          ))}
-        </select>
-
-        <div className="w-px h-6 bg-white/10 mx-1" />
-
         {/* Add Node */}
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 px-3 text-xs gap-1.5 hover:bg-blue-500/10 hover:text-blue-400 cursor-pointer"
+          className="h-8 px-3 text-[10px] gap-1.5 font-medium tracking-wider text-[#4a7a9f] hover:bg-[#00d4ff]/10 hover:text-[#00d4ff] cursor-pointer transition-all duration-200"
           onClick={onOpenAddNode}
         >
           <Plus className="h-3.5 w-3.5" />
@@ -131,18 +138,18 @@ export function TopBar({ onOpenAddNode, onOpenAddEdge, onOpenSearch }: TopBarPro
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 px-3 text-xs gap-1.5 hover:bg-violet-500/10 hover:text-violet-400 cursor-pointer"
+          className="h-8 px-3 text-[10px] gap-1.5 font-medium tracking-wider text-[#4a7a9f] hover:bg-[#bf5af2]/10 hover:text-[#bf5af2] cursor-pointer transition-all duration-200"
           onClick={onOpenAddEdge}
         >
-          <Plus className="h-3.5 w-3.5" />
+          <Zap className="h-3.5 w-3.5" />
           Edge
         </Button>
 
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-5 bg-white/[0.06] mx-1" />
 
         {/* More menu */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors cursor-pointer">
+          <DropdownMenuTrigger className="h-8 w-8 flex items-center justify-center rounded-lg text-[#4a7a9f] hover:text-[#00d4ff] hover:bg-[#00d4ff]/10 transition-all duration-200 cursor-pointer">
             <MoreHorizontal className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">

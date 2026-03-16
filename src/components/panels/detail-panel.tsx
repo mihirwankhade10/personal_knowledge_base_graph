@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Trash2, ArrowRight, Link } from "lucide-react";
+import { X, Trash2, ArrowRight, Link, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -66,17 +66,19 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 350, opacity: 0 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="w-[320px] h-full glass-strong border-l border-white/5 flex flex-col shrink-0 z-40"
+          className="w-[320px] h-full glass-strong border-l border-[#00d4ff]/10 flex flex-col shrink-0 z-40"
         >
           <ScrollArea className="flex-1">
-            <div className="p-4">
+            <div className="p-5">
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                  {selectedNode ? "Node Details" : "Edge Details"}
-                </h2>
+              <div className="flex items-center justify-between mb-5">
+                <div className="panel-header-line">
+                  <h2 className="text-[10px] font-bold text-[#00d4ff]/60 uppercase tracking-[0.2em] font-mono">
+                    {selectedNode ? "Node Details" : "Edge Details"}
+                  </h2>
+                </div>
                 <button
-                  className="h-7 w-7 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors cursor-pointer"
+                  className="h-7 w-7 flex items-center justify-center rounded-lg text-[#4a7a9f] hover:text-[#00d4ff] hover:bg-[#00d4ff]/10 transition-all duration-200 cursor-pointer"
                   onClick={handleClose}
                 >
                   <X className="h-4 w-4" />
@@ -85,11 +87,11 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
 
               {/* Node details */}
               {selectedNode && (
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {/* Category */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <div
-                      className="w-3 h-3 rounded-full shrink-0"
+                      className="w-3 h-3 rounded-full shrink-0 status-dot"
                       style={{
                         backgroundColor:
                           CATEGORY_COLORS[selectedNode.category],
@@ -102,10 +104,10 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                           category: e.target.value as NodeCategory,
                         })
                       }
-                      className="h-7 px-1 text-xs bg-transparent border-none text-foreground outline-none cursor-pointer"
+                      className="h-7 px-1 text-xs bg-transparent border-none text-foreground outline-none cursor-pointer font-medium"
                     >
                       {categories.map(([key, label]) => (
-                        <option key={key} value={key} className="bg-[#1a1a2e]">
+                        <option key={key} value={key} className="bg-[#0a0f1e]">
                           {label}
                         </option>
                       ))}
@@ -113,8 +115,8 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                   </div>
 
                   {/* Title */}
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">
+                  <div className="space-y-2">
+                    <Label className="text-[10px] text-[#4a7a9f] uppercase tracking-wider font-mono">
                       Title
                     </Label>
                     <Input
@@ -122,13 +124,13 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                       onChange={(e) =>
                         updateNode(selectedNode.id, { title: e.target.value })
                       }
-                      className="text-lg font-semibold h-auto py-2"
+                      className="text-lg font-semibold h-auto py-2 bg-white/[0.03] border-white/[0.06] focus:border-[#00d4ff]/40 focus:shadow-[0_0_10px_rgba(0,212,255,0.1)] transition-all"
                     />
                   </div>
 
                   {/* Notes */}
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">
+                  <div className="space-y-2">
+                    <Label className="text-[10px] text-[#4a7a9f] uppercase tracking-wider font-mono">
                       Notes
                     </Label>
                     <Textarea
@@ -137,19 +139,19 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                         updateNode(selectedNode.id, { notes: e.target.value })
                       }
                       rows={5}
-                      className="resize-none text-sm leading-relaxed"
+                      className="resize-none text-sm leading-relaxed bg-white/[0.03] border-white/[0.06] focus:border-[#00d4ff]/40 focus:shadow-[0_0_10px_rgba(0,212,255,0.1)] transition-all"
                       placeholder="Add notes about this topic..."
                     />
                   </div>
 
-                  <Separator className="bg-white/5" />
+                  <Separator className="bg-[#00d4ff]/[0.06]" />
 
                   {/* Connected nodes */}
                   {connectedNodes.length > 0 && (
-                    <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground flex items-center gap-1.5">
+                    <div className="space-y-3">
+                      <Label className="text-[10px] text-[#4a7a9f] uppercase tracking-wider font-mono flex items-center gap-1.5">
                         <Link className="h-3 w-3" />
-                        Connected Nodes ({connectedNodes.length})
+                        Connections ({connectedNodes.length})
                       </Label>
                       <div className="flex flex-wrap gap-1.5">
                         {connectedNodes.map((node) => {
@@ -161,7 +163,7 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                             <Badge
                               key={node.id}
                               variant="outline"
-                              className="cursor-pointer hover:bg-white/10 transition-colors border-white/10 text-xs gap-1"
+                              className="cursor-pointer hover:bg-[#00d4ff]/10 hover:border-[#00d4ff]/20 transition-all duration-200 border-white/[0.08] text-xs gap-1.5"
                               onClick={() => {
                                 selectNode(node.id);
                                 onCenterNode(node.id);
@@ -172,11 +174,12 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                                 style={{
                                   backgroundColor:
                                     CATEGORY_COLORS[node.category],
+                                  boxShadow: `0 0 6px ${CATEGORY_COLORS[node.category]}80`,
                                 }}
                               />
                               {node.title}
                               {edge && (
-                                <span className="text-muted-foreground ml-0.5">
+                                <span className="text-[#4a7a9f] ml-0.5">
                                   ({edge.label})
                                 </span>
                               )}
@@ -187,11 +190,11 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                     </div>
                   )}
 
-                  <Separator className="bg-white/5" />
+                  <Separator className="bg-[#00d4ff]/[0.06]" />
 
                   {/* Meta */}
-                  <div className="text-xs text-muted-foreground">
-                    Created{" "}
+                  <div className="flex items-center gap-1.5 text-[10px] text-[#4a7a9f] font-mono">
+                    <Clock className="h-3 w-3" />
                     {new Date(selectedNode.createdAt).toLocaleDateString()}
                   </div>
 
@@ -199,7 +202,7 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 gap-2 cursor-pointer"
+                    className="w-full text-[#ff2d55]/70 hover:text-[#ff2d55] hover:bg-[#ff2d55]/10 gap-2 cursor-pointer border border-transparent hover:border-[#ff2d55]/20 transition-all duration-200"
                     onClick={() => {
                       deleteNode(selectedNode.id);
                     }}
@@ -212,12 +215,12 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
 
               {/* Edge details */}
               {selectedEdge && (
-                <div className="space-y-4">
-                  {/* Source → Target */}
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5">
+                <div className="space-y-5">
+                  {/* Source -> Target */}
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
                     <Badge
                       variant="outline"
-                      className="border-white/10 cursor-pointer hover:bg-white/10"
+                      className="border-[#00d4ff]/20 cursor-pointer hover:bg-[#00d4ff]/10 transition-all"
                       onClick={() => {
                         selectNode(selectedEdge.source);
                         onCenterNode(selectedEdge.source);
@@ -226,10 +229,10 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                       {nodes.find((n) => n.id === selectedEdge.source)?.title ||
                         "Unknown"}
                     </Badge>
-                    <ArrowRight className="h-3 w-3 text-muted-foreground shrink-0" />
+                    <ArrowRight className="h-3 w-3 text-[#00d4ff]/40 shrink-0" />
                     <Badge
                       variant="outline"
-                      className="border-white/10 cursor-pointer hover:bg-white/10"
+                      className="border-[#bf5af2]/20 cursor-pointer hover:bg-[#bf5af2]/10 transition-all"
                       onClick={() => {
                         selectNode(selectedEdge.target);
                         onCenterNode(selectedEdge.target);
@@ -241,23 +244,24 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                   </div>
 
                   {/* Label */}
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">
-                      Relationship Label
+                  <div className="space-y-2">
+                    <Label className="text-[10px] text-[#4a7a9f] uppercase tracking-wider font-mono">
+                      Relationship
                     </Label>
                     <Input
                       value={selectedEdge.label}
                       onChange={(e) =>
                         updateEdge(selectedEdge.id, { label: e.target.value })
                       }
+                      className="bg-white/[0.03] border-white/[0.06] focus:border-[#00d4ff]/40 focus:shadow-[0_0_10px_rgba(0,212,255,0.1)] transition-all"
                     />
                   </div>
 
-                  <Separator className="bg-white/5" />
+                  <Separator className="bg-[#00d4ff]/[0.06]" />
 
                   {/* Meta */}
-                  <div className="text-xs text-muted-foreground">
-                    Created{" "}
+                  <div className="flex items-center gap-1.5 text-[10px] text-[#4a7a9f] font-mono">
+                    <Clock className="h-3 w-3" />
                     {new Date(selectedEdge.createdAt).toLocaleDateString()}
                   </div>
 
@@ -265,7 +269,7 @@ export function DetailPanel({ onCenterNode }: DetailPanelProps) {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 gap-2 cursor-pointer"
+                    className="w-full text-[#ff2d55]/70 hover:text-[#ff2d55] hover:bg-[#ff2d55]/10 gap-2 cursor-pointer border border-transparent hover:border-[#ff2d55]/20 transition-all duration-200"
                     onClick={() => {
                       deleteEdge(selectedEdge.id);
                     }}

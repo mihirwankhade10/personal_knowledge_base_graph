@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#07070f] text-white overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050510] text-white overflow-hidden`}
       >
         <TooltipProvider>
           {children}

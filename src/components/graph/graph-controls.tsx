@@ -29,11 +29,11 @@ export function GraphControls({
   ];
 
   return (
-    <div className="absolute bottom-4 left-4 flex flex-col gap-1 glass rounded-xl p-1">
+    <div className="absolute bottom-5 left-5 flex flex-col gap-0.5 glass rounded-xl p-1.5 animate-border-pulse z-10">
       {controls.map(({ icon: Icon, onClick, label }) => (
         <Tooltip key={label}>
           <TooltipTrigger
-            className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors cursor-pointer"
+            className="control-btn h-8 w-8 flex items-center justify-center rounded-lg text-[#4a7a9f] transition-all duration-200 cursor-pointer"
             onClick={onClick}
           >
             <Icon className="h-4 w-4" />

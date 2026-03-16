@@ -55,7 +55,7 @@ export function AddEdgeDialog({ open, onOpenChange }: AddEdgeDialogProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-[#bf5af2] shadow-[0_0_8px_rgba(191,90,242,0.5)]" />
             Add New Edge
           </DialogTitle>
         </DialogHeader>
@@ -67,9 +67,9 @@ export function AddEdgeDialog({ open, onOpenChange }: AddEdgeDialogProps) {
               onChange={(e) => setSource(e.target.value)}
               className="w-full h-8 px-2 text-sm bg-white/5 border border-white/10 rounded-lg text-foreground outline-none cursor-pointer"
             >
-              <option value="" className="bg-[#1a1a2e]">Select source node...</option>
+              <option value="" className="bg-[#0a0f1e]">Select source node...</option>
               {nodes.map((node) => (
-                <option key={node.id} value={node.id} className="bg-[#1a1a2e]">
+                <option key={node.id} value={node.id} className="bg-[#0a0f1e]">
                   {node.title}
                 </option>
               ))}
@@ -83,11 +83,11 @@ export function AddEdgeDialog({ open, onOpenChange }: AddEdgeDialogProps) {
               onChange={(e) => setTarget(e.target.value)}
               className="w-full h-8 px-2 text-sm bg-white/5 border border-white/10 rounded-lg text-foreground outline-none cursor-pointer"
             >
-              <option value="" className="bg-[#1a1a2e]">Select target node...</option>
+              <option value="" className="bg-[#0a0f1e]">Select target node...</option>
               {nodes
                 .filter((n) => n.id !== source)
                 .map((node) => (
-                  <option key={node.id} value={node.id} className="bg-[#1a1a2e]">
+                  <option key={node.id} value={node.id} className="bg-[#0a0f1e]">
                     {node.title}
                   </option>
                 ))}
@@ -106,13 +106,13 @@ export function AddEdgeDialog({ open, onOpenChange }: AddEdgeDialogProps) {
               onChange={(e) => setLabel(e.target.value)}
               className="w-full h-8 px-2 text-sm bg-white/5 border border-white/10 rounded-lg text-foreground outline-none cursor-pointer"
             >
-              <option value="" className="bg-[#1a1a2e]">Select a label...</option>
+              <option value="" className="bg-[#0a0f1e]">Select a label...</option>
               {EDGE_LABEL_PRESETS.map((preset) => (
-                <option key={preset} value={preset} className="bg-[#1a1a2e]">
+                <option key={preset} value={preset} className="bg-[#0a0f1e]">
                   {preset}
                 </option>
               ))}
-              <option value="__custom__" className="bg-[#1a1a2e]">Custom label...</option>
+              <option value="__custom__" className="bg-[#0a0f1e]">Custom label...</option>
             </select>
             {label === "__custom__" && (
               <Input
@@ -136,7 +136,7 @@ export function AddEdgeDialog({ open, onOpenChange }: AddEdgeDialogProps) {
             <Button
               type="submit"
               disabled={!isValid}
-              className="bg-violet-600 hover:bg-violet-500 text-white"
+              className="bg-[#bf5af2]/20 hover:bg-[#bf5af2]/30 text-[#bf5af2] border border-[#bf5af2]/30 hover:border-[#bf5af2]/50 hover:shadow-[0_0_15px_rgba(191,90,242,0.2)] transition-all"
             >
               Add Edge
             </Button>

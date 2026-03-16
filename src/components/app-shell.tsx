@@ -35,15 +35,38 @@ export function AppShell() {
 
   const handleCenterNode = useCallback((_nodeId: string) => {
     // centerOnNode is handled via the graph's internal hook
-    // This is a placeholder for the TopBar/DetailPanel callbacks
   }, []);
 
   if (!isLoaded) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-[#07070f]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 animate-pulse" />
-          <p className="text-sm text-muted-foreground">Loading graph...</p>
+      <div className="h-screen w-screen flex items-center justify-center bg-[#050510]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#bf5af2] flex items-center justify-center loading-icon">
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+            <div className="loading-ring" />
+          </div>
+          <div className="text-center">
+            <p className="text-xs font-mono text-[#00d4ff]/60 tracking-[0.3em] uppercase">
+              Initializing
+            </p>
+            <p className="text-[10px] font-mono text-[#4a7a9f] mt-1 tracking-wider">
+              Loading knowledge graph...
+            </p>
+          </div>
         </div>
       </div>
     );

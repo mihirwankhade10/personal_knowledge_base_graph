@@ -6,6 +6,7 @@ import dagre from "cytoscape-dagre";
 import { useGraphStore } from "@/lib/store";
 import { toCytoscapeElements } from "@/lib/cytoscape-utils";
 import { cytoscapeStyles } from "@/components/graph/graph-styles";
+import { CATEGORY_COLORS } from "@/lib/constants";
 
 // Register dagre layout
 if (typeof window !== "undefined") {
@@ -111,19 +112,7 @@ export function useGraph(containerRef: React.RefObject<HTMLDivElement | null>) {
           cyNode.data("label", node.title);
           cyNode.data("notes", node.notes);
           cyNode.data("category", node.category);
-          cyNode.data(
-            "color",
-            (
-              {
-                framework: "#3b82f6",
-                language: "#8b5cf6",
-                concept: "#10b981",
-                tooling: "#f59e0b",
-                pattern: "#ec4899",
-                other: "#6b7280",
-              } as Record<string, string>
-            )[node.category]
-          );
+          cyNode.data("color", CATEGORY_COLORS[node.category]);
         } else {
           // Add new node
           const newNode = cy.add({
@@ -132,16 +121,7 @@ export function useGraph(containerRef: React.RefObject<HTMLDivElement | null>) {
               label: node.title,
               notes: node.notes,
               category: node.category,
-              color: (
-                {
-                  framework: "#3b82f6",
-                  language: "#8b5cf6",
-                  concept: "#10b981",
-                  tooling: "#f59e0b",
-                  pattern: "#ec4899",
-                  other: "#6b7280",
-                } as Record<string, string>
-              )[node.category],
+              color: CATEGORY_COLORS[node.category],
             },
             position: node.position || {
               x: Math.random() * 400 + 200,

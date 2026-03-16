@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import cytoscape, { Core } from "cytoscape";
 import { useGraphStore } from "@/lib/store";
 import { toCytoscapeElements } from "@/lib/cytoscape-utils";
-import { CATEGORY_COLORS } from "@/lib/constants";
 
 interface GraphMinimapProps {
   mainCy: React.RefObject<Core | null>;
@@ -23,27 +22,33 @@ export function GraphMinimap({ mainCy }: GraphMinimapProps) {
     const cy = cytoscape({
       container: containerRef.current,
       elements: toCytoscapeElements(nodes, edges),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       style: [
         {
           selector: "node",
           style: {
             "background-color": "data(color)",
-            width: 8,
-            height: 8,
+            width: 6,
+            height: 6,
             label: "",
             "border-width": 0,
+            "shadow-blur": "8px",
+            "shadow-color": "data(color)",
+            "shadow-opacity": 0.6,
+            "shadow-offset-x": "0px",
+            "shadow-offset-y": "0px",
           },
         },
         {
           selector: "edge",
           style: {
-            "line-color": "#374151",
-            width: 1,
+            "line-color": "#0a2a4a",
+            width: 0.5,
             "target-arrow-shape": "none",
-            opacity: 0.3,
+            opacity: 0.4,
           },
         },
-      ],
+      ] as any[],
       layout: { name: "preset" },
       userPanningEnabled: false,
       userZoomingEnabled: false,
@@ -88,8 +93,34 @@ export function GraphMinimap({ mainCy }: GraphMinimapProps) {
   }, [mainCy, nodes]);
 
   return (
-    <div className="absolute bottom-4 right-4 w-[180px] h-[120px] glass rounded-lg overflow-hidden border border-white/5">
-      <div ref={containerRef} className="w-full h-full" />
+    <div className="absolute bottom-5 right-5 w-[160px] h-[160px] z-10">
+      {/* Radar container */}
+      <div className="relative w-full h-full rounded-full glass overflow-hidden animate-border-pulse">
+        {/* Radar sweep */}
+        <div className="minimap-radar absolute inset-0 rounded-full" />
+
+        {/* Concentric rings */}
+        <div
+          className="minimap-ring"
+          style={{ inset: "25%", opacity: 0.5 }}
+        />
+        <div
+          className="minimap-ring"
+          style={{ inset: "40%", opacity: 0.3 }}
+        />
+
+        {/* Cross-hair lines */}
+        <div className="absolute top-1/2 left-2 right-2 h-px bg-[#00d4ff]/10 z-1" />
+        <div className="absolute left-1/2 top-2 bottom-2 w-px bg-[#00d4ff]/10 z-1" />
+
+        {/* Graph minimap */}
+        <div ref={containerRef} className="absolute inset-2 rounded-full overflow-hidden z-3" />
+
+        {/* Label */}
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[7px] font-mono text-[#00d4ff]/40 tracking-widest uppercase z-4">
+          RADAR
+        </div>
+      </div>
     </div>
   );
 }

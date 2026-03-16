@@ -41,6 +41,7 @@ export function SearchCommand({
                 className="w-2.5 h-2.5 rounded-full shrink-0"
                 style={{
                   backgroundColor: CATEGORY_COLORS[node.category],
+                  boxShadow: `0 0 8px ${CATEGORY_COLORS[node.category]}80`,
                 }}
               />
               <div className="flex-1 min-w-0">

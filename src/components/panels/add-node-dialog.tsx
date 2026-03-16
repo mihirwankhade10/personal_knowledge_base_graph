@@ -51,7 +51,7 @@ export function AddNodeDialog({ open, onOpenChange }: AddNodeDialogProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-[#00d4ff] shadow-[0_0_8px_rgba(0,212,255,0.5)]" />
             Add New Node
           </DialogTitle>
         </DialogHeader>
@@ -81,7 +81,7 @@ export function AddNodeDialog({ open, onOpenChange }: AddNodeDialogProps) {
                 className="flex-1 h-8 px-2 text-sm bg-white/5 border border-white/10 rounded-lg text-foreground outline-none cursor-pointer"
               >
                 {categories.map(([key, label]) => (
-                  <option key={key} value={key} className="bg-[#1a1a2e]">
+                  <option key={key} value={key} className="bg-[#0a0f1e]">
                     {label}
                   </option>
                 ))}
@@ -112,7 +112,7 @@ export function AddNodeDialog({ open, onOpenChange }: AddNodeDialogProps) {
             <Button
               type="submit"
               disabled={!title.trim()}
-              className="bg-blue-600 hover:bg-blue-500 text-white"
+              className="bg-[#00d4ff]/20 hover:bg-[#00d4ff]/30 text-[#00d4ff] border border-[#00d4ff]/30 hover:border-[#00d4ff]/50 hover:shadow-[0_0_15px_rgba(0,212,255,0.2)] transition-all"
             >
               Add Node
             </Button>

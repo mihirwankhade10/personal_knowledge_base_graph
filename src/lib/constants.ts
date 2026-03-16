@@ -1,12 +1,12 @@
 import { NodeCategory } from "./types";
 
 export const CATEGORY_COLORS: Record<NodeCategory, string> = {
-  framework: "#3b82f6",   // blue
-  language: "#8b5cf6",    // violet
-  concept: "#10b981",     // emerald
-  tooling: "#f59e0b",     // amber
-  pattern: "#ec4899",     // pink
-  other: "#6b7280",       // gray
+  framework: "#00d4ff",   // neon cyan-blue
+  language: "#bf5af2",    // neon purple
+  concept: "#30d158",     // neon green
+  tooling: "#ff9f0a",     // neon amber
+  pattern: "#ff2d55",     // neon pink
+  other: "#64d2ff",       // light cyan
 };
 
 export const CATEGORY_LABELS: Record<NodeCategory, string> = {
